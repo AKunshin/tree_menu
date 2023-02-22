@@ -1,7 +1,9 @@
-<ul>
-    {% for menu in menu_list %}
-    <a href="{{ menu.get_absolute_url }}">
-        <p>{{ menu.title }}</p>
-    </a>
-    {% endfor %}
-</ul>
+<div class="{{ menu_class }}">
+    <ul>
+        {% for menu in menu_list %}
+        <li>
+            <a href="{{ menu.get_absolute_url }}">{{ menu.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -5,6 +5,6 @@ from main.models import MenuItem
 register = template.Library()
 
 @register.inclusion_tag("main/menu_list.html")
-def draw_menu():
-    menu_list = MenuItem.objects.all()
-    return {"menu_list": menu_list}
+def draw_menu(main_menu):
+    main_menu = MenuItem.objects.all()
+    return {"menu_list": main_menu}

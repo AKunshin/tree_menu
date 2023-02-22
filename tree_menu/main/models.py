@@ -13,8 +13,13 @@ class MenuItem(models.Model):
         verbose_name="Parrent item"
     )
 
+
     def __str__(self) -> str:
         return self.title
 
     def get_absolute_url(self):
         return reverse('menu_detail', kwargs={"slug": self.slug})
+
+    class Meta:
+        ordering = ["parrent__id"]
+
