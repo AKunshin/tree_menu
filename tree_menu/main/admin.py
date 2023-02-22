@@ -1,15 +1,8 @@
 from django.contrib import admin
-from .models import Menu, Item
+from .models import MenuItem
 
 
-@admin.register(Menu)
+@admin.register(MenuItem)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ["title", "slug"]
+    list_display = ["title", "slug", "parrent"]
     prepopulated_fields = {"slug": ("title",)}
-
-@admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ["menu", "title", "slug"]
-    prepopulated_fields = {"slug": ("title",)}
-
-
