@@ -1,4 +1,5 @@
 from django.db import models
+
 from django.urls import reverse
 
 
@@ -10,11 +11,18 @@ class MenuItem(models.Model):
         null=True,
         blank=True,
         on_delete=models.CASCADE,
+        related_name="childs",
         verbose_name="Parrent item"
     )
+    nesting_level = models.PositiveIntegerField(
+                        default=1, verbose_name="Nesting level"
+                        )
 
     def __str__(self) -> str:
         return self.title
 
     def get_absolute_url(self):
         return reverse('menu_detail', kwargs={"slug": self.slug})
+    
+    class Meta:
+        ordering = ["nesting_level"]

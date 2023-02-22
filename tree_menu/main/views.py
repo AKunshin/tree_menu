@@ -7,6 +7,7 @@ class HomeMenu(ListView):
     template_name = 'main/home_main.html'
     context_object_name = 'menu_list'
 
+
 class MenuItemDetail(DetailView):
     model = MenuItem
     context_object_name = "menu_item"
