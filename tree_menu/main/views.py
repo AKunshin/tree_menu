@@ -4,8 +4,8 @@ from .models import MenuItem
 
 class HomeMenu(ListView):
     model = MenuItem
-    template_name = 'main/home_main.html'
-    context_object_name = 'main_menu'
+    template_name = "main/home_main.html"
+    context_object_name = "main_menu"
 
     def get_queryset(self):
         return MenuItem.objects.filter(nesting_level=1)
@@ -16,7 +16,7 @@ class HomeMenu(ListView):
 
 class MenuItemDetail(DetailView):
     model = MenuItem
-    context_object_name = "menu_item"
+    context_object_name = "main_menu"
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
