@@ -5,4 +5,7 @@ from .models import MenuItem
 
 @receiver(pre_save, sender=MenuItem)
 def set_nesting_level(sender, instance, **kwargs):
-    instance.nesting_level = instance.parrent.nesting_level + 1
+    if instance.parrent:
+        instance.nesting_level = instance.parrent.nesting_level + 1
+    else:
+        instance.nesting_level = 1

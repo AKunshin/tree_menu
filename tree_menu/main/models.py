@@ -25,4 +25,4 @@ class MenuItem(models.Model):
         return reverse('menu_detail', kwargs={"slug": self.slug})
     
     class Meta:
-        ordering = ["nesting_level"]
+        ordering = ["parrent_id"]

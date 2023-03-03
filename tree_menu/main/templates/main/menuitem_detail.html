@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}{{ menu_item.title}}{% endblock %}
-{% block content %}    
-        <p>{{ menu_item.title }}</p> 
+
+{% load draw_menu %}
+
+{% block content %}
+
+{% draw_menu "main_menu"%}
+
 {% endblock %}
