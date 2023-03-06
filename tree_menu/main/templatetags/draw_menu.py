@@ -11,25 +11,27 @@ def draw_menu(context, main_menu):
     item = context["main_menu"]
     root_menu_items = MenuItem.objects.filter(nesting_level=1)
 
-    branch = [item.childs.all(), item]
 
+    branch = [item.childs.all(), item]
+    logger.info(f"branch: {branch}")
     def get_submenu(object) -> list:
         """Функция для нахождения всех предков для объекта меню"""
         if object.parrent:
             submenu = object.parrent
             if submenu.nesting_level >= 1:
                 branch.append(submenu)
+                logger.info(f"branch: {branch}")
                 get_submenu(submenu)
         return branch
 
     def build_menu_tree(objects) -> list:
         """Функция для построения списка всех объектов меню"""
+        submenu = get_submenu(item)
+        root_item_for_submenu = submenu.pop()
         for root_item in root_menu_items:
-            submenu = get_submenu(item)
             logger.debug(f"item: {item}")
             logger.debug(f"root_item: {root_item}")
-            logger.debug(f"get submenu item: {submenu}")
-            if root_item == submenu[-1]:
+            if root_item == root_item_for_submenu:
                 root_item.children = submenu
                 logger.debug(f"Root_item_children: {root_item.children}")
                 return root_menu_items
