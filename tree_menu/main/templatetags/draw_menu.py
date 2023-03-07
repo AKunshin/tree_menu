@@ -11,8 +11,8 @@ def draw_menu(context, main_menu):
     item = context["main_menu"]
     root_menu_items = MenuItem.objects.filter(nesting_level=1)
 
-    item.children = [children for children in item.childs.all()]
-    branch = [item.children, item]
+    branch = [children for children in item.childs.all()]
+    branch.append(item)
     logger.info(f"branch: {branch}")
 
     def get_submenu(object) -> list:
