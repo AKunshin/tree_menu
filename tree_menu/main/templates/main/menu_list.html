@@ -1,10 +1,11 @@
 <ul>
     {% for item in menu_list %}
         <li>
-            <a href="{{ item.get_absolute_url }}"><span>{{ item.title }}</span></a>
+            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+            {% comment %} <p>{{ item.children }}</p> {% endcomment %}
+        </li>
                 {% if item.children %}
                     {% include 'main/menu_list.html' with menu_list=item.children %}
                 {% endif %}
-        </li>
     {% endfor %}
 </ul>

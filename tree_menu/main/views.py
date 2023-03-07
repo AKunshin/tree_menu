@@ -12,11 +12,13 @@ class HomeMenu(ListView):
 
 # class HomeMenu(TemplateView):
 #     template_name = 'main/home_main.html'
+#     context_object_name = "main_menu"
 
 
 class MenuItemDetail(DetailView):
     model = MenuItem
     context_object_name = "main_menu"
+
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
