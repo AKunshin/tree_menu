@@ -1,6 +1,8 @@
 {% for item in menu_list %}
 <a href="{{ item.get_absolute_url }}">
     <p>{{ item.title }}</p>
-    <p>{{ item.children }}</p>
+    {% for item_c in item.children %}
+    <p>{{ item_c.title }}</p>
+    {% endfor %}
 </a>
 {% endfor %}
