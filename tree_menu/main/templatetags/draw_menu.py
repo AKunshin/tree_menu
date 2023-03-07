@@ -11,9 +11,9 @@ def draw_menu(context, main_menu):
     item = context["main_menu"]
     root_menu_items = MenuItem.objects.filter(nesting_level=1)
 
-    children = item.childs.all()
-    item.children = children
+    item.children = [children for children in item.childs.all()]
     branch = [item.children, item]
+    logger.info(f"branch: {branch}")
 
     def get_submenu(object) -> list:
         """Builds a list of all the objects parents up to the root"""
@@ -36,8 +36,9 @@ def draw_menu(context, main_menu):
                 submenu.reverse()
                 root_item.children = submenu
                 logger.debug(f"Root_item_children: {root_item.children}")
-                return root_menu_items
         logger.debug(f"Root_menu_items: {root_menu_items}")
         return root_menu_items
+    
+    menu_list = build_menu_tree(root_menu_items)
 
-    return {"menu_list": build_menu_tree(root_menu_items)}
+    return {"menu_list": menu_list}
