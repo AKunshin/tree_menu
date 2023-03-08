@@ -1,0 +1,8 @@
+asgiref==3.6.0
+colorama==0.4.6
+Django==4.1.7
+django_debug_toolbar==3.8.1
+loguru==0.6.0
+sqlparse==0.4.3
+tzdata==2022.7
+win32-setctime==1.1.0
