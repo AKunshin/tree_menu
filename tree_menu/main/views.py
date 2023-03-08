@@ -1,15 +1,15 @@
 from django.views.generic import ListView, DetailView
 
-from .models import MenuItem
+from .models import MenuItem, Menu
 
 
 class HomeMenu(ListView):
-    model = MenuItem
+    model = Menu
     template_name = "main/home_main.html"
     context_object_name = "main_menu"
 
     def get_queryset(self):
-        return MenuItem.objects.filter(nesting_level=1).first()
+        return Menu.objects.select_related().all()
 
 
 class MenuItemDetail(DetailView):
