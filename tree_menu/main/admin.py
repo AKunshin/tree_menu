@@ -5,5 +5,5 @@ from .models import MenuItem
 
 @admin.register(MenuItem)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ["title", "slug", "parrent", "nesting_level"]
+    list_display = ["id", "title", "slug", "parrent", "nesting_level"]
     prepopulated_fields = {"slug": ("title",)}
