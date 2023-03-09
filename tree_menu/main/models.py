@@ -18,6 +18,7 @@ class MenuItem(models.Model):
                             Menu,
                             on_delete=models.CASCADE,
                             blank=False,
+                            related_name="items",
                             verbose_name="Menu"
                             )
     parrent = models.ForeignKey(
@@ -36,7 +37,7 @@ class MenuItem(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('menu_detail', kwargs={"slug": self.slug})
+        return reverse('menu_detail', args=[self.menu.slug, self.slug])
     
     class Meta:
         ordering = ["parrent_id"]
