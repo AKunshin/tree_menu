@@ -1,13 +1,17 @@
+{% comment %} {% for menu in menu_list %}
+<p>
+    <a href="{{ menu.get_absolute_url }}">{{ menu.title }}</a> {% endcomment %}
+
 <ul>
-    {% for menu in menu_list %}
-        <a href="{{ menu.get_absolute_url }}">{{ menu.title }}</a>
-            {% for item in menu_tree %}
-            <li>
-                    <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
-                    {% if item.children %}
-                        {% include 'main/menu_list.html' with menu_tree=item.children %}
-                    {% endif %}
-                </li>
-            {% endfor %}
+    {% for item in menu_list %}
+        <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+        <li>
+            {% if item.children %}
+                {% include 'main/menu_list.html' with menu_list=item.children %}
+            {% endif %}
+        </li>
     {% endfor %}
+{% comment %} </p> {% endcomment %}
 </ul>
+
+{% comment %} {% endfor %} {% endcomment %}
