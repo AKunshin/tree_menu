@@ -6,6 +6,8 @@ register = template.Library()
 
 @register.inclusion_tag("main/menu_list.html", takes_context=True)
 def draw_menu(context, main_menu):
+    logger.debug(f"main_menu: {main_menu}")
+
     menu_list = context["main_menu"]
 
     logger.debug(f"menu_list: {menu_list}")
@@ -48,10 +50,19 @@ def draw_menu(context, main_menu):
                     root_item.children = submenu
             return root_menu_items
 
-        menu_tree = build_menu_tree(root_menu_items)
+        def build_main_menu_tree(objects) -> list:
+            for menu in menu_list:
+                logger.debug(f"menu: {menu}")
+                if menu == item.menu:
+                    logger.debug(f"item.menu: {item.menu}")
+                    menu.children = build_menu_tree(root_menu_items)
+            return menu_list
 
-        logger.debug(f"menu_tree: {menu_tree}")
+        # menu_tree = build_menu_tree(root_menu_items)
+
+        # logger.debug(f"menu_tree: {menu_tree}")
     
 
-    context = {"menu_list": menu_list, "menu_tree": menu_tree }
+    # context = {"menu_list": menu_list, "menu_tree": menu_tree }
+    context = {"menu_list": build_main_menu_tree(menu_list)}
     return context

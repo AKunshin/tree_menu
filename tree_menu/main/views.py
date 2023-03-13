@@ -1,6 +1,7 @@
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView
 
-from .models import MenuItem, Menu
+from .models import Menu
 
 
 class HomeMenu(ListView):
@@ -12,12 +13,13 @@ class HomeMenu(ListView):
         return Menu.objects.select_related().all()
 
 
-class MenuItemDetail(DetailView):
-    model = MenuItem
-    context_object_name = "requested_item"
-    queryset = MenuItem.objects.select_related("parrent")
+def get_menu_tree(request, menu_slug ,item_slug):
+    menu = get_object_or_404(Menu, slug=menu_slug)
+    requested_item = get_object_or_404(menu.items, slug=item_slug)
+    main_menu = Menu.objects.select_related().all()
+    context = {
+        "main_menu": main_menu,
+        "requested_item": requested_item,
+    }
 
-    def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        context["main_menu"] = Menu.objects.select_related().all()
-        return context
+    return render(request, "main/menuitem_detail.html", context=context)

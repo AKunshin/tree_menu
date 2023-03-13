@@ -1,0 +1,8 @@
+{% for menu in menu_list %}
+<p>
+    <a href="{{ menu.get_absolute_url }}">{{ menu.title }}</a>
+</p>
+
+{% include  "main/menu_tree.html" %}
+
+{% endfor %}
