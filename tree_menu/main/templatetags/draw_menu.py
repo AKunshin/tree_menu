@@ -25,7 +25,10 @@ def draw_menu(context, main_menu):
     def build_menu_tree(objects) -> list:
         """Builds a list of all menu objects"""
         submenu = get_submenu(item)
+        #The submenu is built including the root parent element
         root_item_for_submenu = submenu.pop()
+        #Returning the root parent from the list
+
         for root_item in root_menu_items:
             if root_item == root_item_for_submenu:
                 submenu.reverse()
