@@ -5,7 +5,7 @@ from .models import MenuItem
 
 class HomeMenu(ListView):
     model = MenuItem
-    template_name = "main/home_main.html"
+    template_name = "main/menuitem_detail.html"
     context_object_name = "main_menu"
 
     def get_queryset(self):
