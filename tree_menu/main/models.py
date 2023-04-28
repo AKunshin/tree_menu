@@ -16,8 +16,6 @@ class MenuItem(models.Model):
     nesting_level = models.PositiveIntegerField(
         default=1, verbose_name="Nesting level"
     )
-    has_chosen = models.BooleanField(blank=True, null=True, default=None,
-                                     verbose_name="Item has been chosen")
 
     def __str__(self) -> str:
         return self.title

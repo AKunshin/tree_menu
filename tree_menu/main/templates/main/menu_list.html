@@ -1,12 +1,11 @@
-{% for item in menu_list %}
+{% for item in branch %}
 <menu>
     <li>
         <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
-        {% if item.has_chosen %}
-        <menu>
-            {% include 'main/menu_list.html' with menu_list=item.childs.all %}
-        </menu>
-        {% endif %}
+        {% comment %} {% if item in branch %} {% endcomment %}
+            {% include 'main/menu_list.html' with branch=item.childs.all %}
+        {% comment %} {% endif %} {% endcomment %}
     </li>
 </menu>
+
 {% endfor %}
