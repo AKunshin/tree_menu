@@ -1,12 +1,31 @@
-<ul>
-    {% for item in menu_list %}
-        <li>
-            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
-            <ul>
-            {% if item.children %}
-                    {% include 'main/menu_list.html' with menu_list=item.children %}
-            {% endif %}
-            </ul>
-        </li>
+<menu>
+    {% for main_item in main_items %}
+        {% for item_ch in main_item.childs.all %}
+            <li>
+                <a href="{{ item_ch.get_absolute_url }}">{{ item_ch.title }}</a>
+                {% if main_item is root_item %}
+                    {% for ch in children %}
+                        <menu>
+                            <li>
+                                <a href="{{ ch.get_absolute_url }}">{{ ch.title }}</a>
+                                {% if ch is not active_item %}
+                                <menu>
+                                    <li>
+                                        {% for act_ch in active_item.childs.all %}
+                                        <a href="{{ ch.get_absolute_url }}">{{ ch.title }}</a>
+                                        {% endfor %}
+                                    </li>
+                                </menu>
+                                {% include 'main/menu_list.html' with children=ch.childs.all main_items=main_items root_item=root_item active_item=active_item %}
+                                {% endif %}
+                            </li>
+                        </menu>
+                    {% endfor %}
+                {% endif %}
+            </li>
+        {% endfor %}
+        {% comment %}
+    {% main_items.remove(main_item) %}
+    {% endcomment %}
     {% endfor %}
-</ul>
+</menu>

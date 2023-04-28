@@ -8,11 +8,11 @@ class MenuItem(models.Model):
     parrent = models.ForeignKey(
         'self',
         null=True,
-        blank=True,
         on_delete=models.CASCADE,
         related_name="childs",
         verbose_name="Parrent item"
     )
+        # blank=True,
     nesting_level = models.PositiveIntegerField(
         default=1, verbose_name="Nesting level"
     )

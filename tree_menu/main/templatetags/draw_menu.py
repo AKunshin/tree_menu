@@ -8,38 +8,32 @@ register = template.Library()
 
 @register.inclusion_tag("main/menu_list.html", takes_context=True)
 def draw_menu(context, main_menu):
-    item = context["main_menu"]
-    root_menu_items = MenuItem.objects.filter(nesting_level=1)
+    active_item = context["main_menu"]
+    logger.debug(f"active_item {active_item}")
 
-    branch = list(item.childs.all())
+    main_items = [MenuItem.objects.filter(nesting_level=1)]
+    logger.debug(f"main_items {main_items}")
 
-    logger.debug(f"branch: {branch}")
-
-    branch.append(item)
-
-    def get_submenu(object) -> list:
+    def get_root_item(object):
         """Builds a list of all the objects parents up to the root"""
-        under_menu_item = object.parrent
-        if under_menu_item:
-            # if under_menu_item.nesting_level >= 1:
-            branch.append(under_menu_item)
-            get_submenu(under_menu_item)
-        logger.debug(f"branch: {branch}")
-        return branch
+        logger.debug(f"object {object}")
+        if object.parrent:
+            parrent = object.parrent
+            get_root_item(parrent)
+        root_item = object
+        logger.debug(f"root_item {root_item}")
+        return root_item
+    
+    root_item = get_root_item(active_item)
+    logger.debug(f"root_item: {root_item}")
+    children = root_item.childs.all()
+    logger.debug(f"children {children}")
 
-    def build_menu_tree(objects) -> list:
-        """Builds a list of all menu objects"""
-        submenu = get_submenu(item)
-        #The submenu is built including the root parent element
-        root_item_for_submenu = submenu.pop()
-        #Returning the root parent from the list
+    context = {
+        "main_items": main_items,
+        "root_item": root_item,
+        "active_item": active_item,
+        "children": children,
+               }
 
-        for root_item in root_menu_items:
-            if root_item == root_item_for_submenu:
-                submenu.reverse()
-                root_item.children = submenu
-        logger.debug(f"root_menu_items: {root_menu_items}")
-        return root_menu_items
-
-    menu_list = build_menu_tree(root_menu_items)
-    return {"menu_list": menu_list}
+    return context
