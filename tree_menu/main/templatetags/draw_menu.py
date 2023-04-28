@@ -11,17 +11,21 @@ def draw_menu(context, main_menu):
     active_item = context["main_menu"]
     logger.debug(f"active_item {active_item}")
 
-    main_items = [MenuItem.objects.filter(nesting_level=1)]
+    main_items = MenuItem.objects.filter(nesting_level=1)
     logger.debug(f"main_items {main_items}")
 
     def get_root_item(object):
         """Builds a list of all the objects parents up to the root"""
         logger.debug(f"object {object}")
-        if object.parrent:
-            parrent = object.parrent
+        parrent = object.parrent
+        logger.debug(f"parrent {parrent}")
+
+
+        if parrent:
             get_root_item(parrent)
-        root_item = object
+        root_item = parrent
         logger.debug(f"root_item {root_item}")
+        
         return root_item
     
     root_item = get_root_item(active_item)
@@ -29,11 +33,10 @@ def draw_menu(context, main_menu):
     children = root_item.childs.all()
     logger.debug(f"children {children}")
 
-    context = {
-        "main_items": main_items,
+
+    return {
+        "main_items": list(main_items),
         "root_item": root_item,
         "active_item": active_item,
         "children": children,
                }
-
-    return context
