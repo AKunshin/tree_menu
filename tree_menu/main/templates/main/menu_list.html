@@ -2,38 +2,39 @@
 <p>{{root_item}}</p>
 <p>{{active_item}}</p>
 <p>{{children}}</p>
+<p>{{ main_items.0 }}</p>
 {% for main_item in main_items %}
 <menu>
     <a href="{{ main_item.get_absolute_url }}">{{ main_item.title }}</a>
     {% if main_item == root_item %}
-    <p>сравнение main_item == root_item </p>
         {% for ch in children %}
             <menu>
                 <li>
-                    {% if ch != active_item %}
-                    <p>ch не равен active_item</p>
                     <a href="{{ ch.get_absolute_url }}">{{ ch.title }}</a>
-                    {% else %}
-                    <p>ch равен active_item</p>
+                    {% if ch == active_item %}
+                    {% for act_ch in active_item.childs.all %}
                     <menu>
                         <li>
-                            {% for act_ch in active_item.childs.all %}
                             <a href="{{ ch.get_absolute_url }}">{{ ch.title }}</a>
-                            {% endfor %}
                         </li>
+                    </menu>
+                    {% endfor %}
                     {% endif %}
-                </menu>
-            </li>
-        </menu>
+                </li>
+            </menu>
         {% endfor %}
+        {{ main_items.pop.0 }}
         {% include 'main/menu_list.html' with children=ch.childs.all main_items=main_items root_item=root_item active_item=active_item %}
     {% else %}
-    {% for item_ch in main_item.childs.all %}
-    <li>
-        <a href="{{ item_ch.get_absolute_url }}">{{ item_ch.title }}</a>
-    </li>
+        {% comment %}
+
+        {% for item_ch in main_item.childs.all %}
+        <li>
+            <a href="{{ item_ch.get_absolute_url }}">{{ item_ch.title }}</a>
+        </li>
         {% endfor %}
-                    {% endif %}
-    {{ main_items.pop.1 }}
+        {% endcomment %}
+    {% endif %}
+    
 </menu>
 {% endfor %}
