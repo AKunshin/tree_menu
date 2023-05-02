@@ -20,13 +20,11 @@ def draw_menu(context, main_menu):
         parrent = object.parrent
         logger.debug(f"parrent {parrent}")
 
-
-        if parrent:
-            get_root_item(parrent)
-        root_item = parrent
-        logger.debug(f"root_item {root_item}")
+        if not parrent:
+            return object
+        else:
+            return get_root_item(parrent)
         
-        return root_item
     
     root_item = get_root_item(active_item)
     logger.debug(f"root_item: {root_item}")
@@ -38,5 +36,5 @@ def draw_menu(context, main_menu):
         "main_items": list(main_items),
         "root_item": root_item,
         "active_item": active_item,
-        "children": children,
+        # "children": children,
                }
