@@ -6,12 +6,12 @@ register = template.Library()
 
 
 @register.inclusion_tag("main/root_menu.html", takes_context=True)
-def draw_menu(context, main_menu):
+def draw_menu(context, main_menu: MenuItem):
     active_item = context["main_menu"]
     main_items = MenuItem.objects.filter(nesting_level=1)
     branch = [active_item]
 
-    def get_active_branch(object) -> list:
+    def get_active_branch(object: MenuItem) -> list[object]:
         """Builds a list of all the objects parents up to the root"""
         under_menu_item = object.parrent
         if under_menu_item:
@@ -22,7 +22,7 @@ def draw_menu(context, main_menu):
     active_branch = get_active_branch(active_item)
 
     return {
-        "main_items": list(main_items),
+        "main_items": main_items,
         "active_item": active_item,
         "active_branch": active_branch,
     }
