@@ -5,7 +5,7 @@ from .models import MenuItem
 
 class HomeMenu(ListView):
     model = MenuItem
-    template_name = "main/home_main.html"
+    template_name = "main/main_menu.html"
     context_object_name = "main_menu"
 
     def get_queryset(self):
@@ -14,5 +14,6 @@ class HomeMenu(ListView):
 
 class MenuItemDetail(DetailView):
     model = MenuItem
+    template_name = "main/main_menu.html"
     context_object_name = "main_menu"
     queryset = MenuItem.objects.select_related("parrent")

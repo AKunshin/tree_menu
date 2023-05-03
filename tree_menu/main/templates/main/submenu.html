@@ -1,7 +1,7 @@
 {% for child in submenu %}
 <menu>
     <li>
-        <a href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+        <a href="{{ child.get_absolute_url }}" {% if child == active_item %} class="active" {% endif %}>{{ child.title }}</a>
     </li>
 </menu>
     {% if child in active_branch %}
