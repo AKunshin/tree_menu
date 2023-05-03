@@ -1,0 +1,13 @@
+{% for child in submenu %}
+<menu>
+    <li>
+        <a href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+    </li>
+</menu>
+    {% if child in active_branch %}
+    <menu>
+        {% include 'main/submenu.html' with submenu=child.childs.all %}
+    </menu>
+    {% endif %}
+{% endfor %}
+        
