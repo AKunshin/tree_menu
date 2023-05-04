@@ -7,7 +7,7 @@ from main.models import MenuItem
 register = template.Library()
 
 
-@register.inclusion_tag("main/root_menu.html", takes_context=True)
+@register.inclusion_tag("inc/_root_menu.html", takes_context=True)
 def draw_menu(context: dict(), menu_name: str):
     """
     A function for rendering menus.

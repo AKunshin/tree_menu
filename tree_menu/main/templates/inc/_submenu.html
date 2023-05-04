@@ -11,7 +11,7 @@
 </menu>
     {% if child in active_branch %}
     <menu>
-        {% include 'main/submenu.html' with submenu=child.childs.all %}
+        {% include 'inc/_submenu.html' with submenu=child.childs.all %}
     </menu>
     {% endif %}
 {% endfor %}
