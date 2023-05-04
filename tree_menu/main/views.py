@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, render
-from django.urls import Resolver404
 
 from .models import MenuItem
 
