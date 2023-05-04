@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ main_menu.title}}{% endblock %}
+{% block title %}
+    {% if context_item %}
+    {{ context_item.title }}
+    {% else %}
+    {{ block.super }}
+    {% endif %}
+{% endblock %}
 
 {% load draw_menu %}
 

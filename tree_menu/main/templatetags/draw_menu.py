@@ -1,5 +1,7 @@
 from django import template
+from django.shortcuts import get_object_or_404
 from loguru import logger
+
 from main.models import MenuItem
 
 register = template.Library()
@@ -8,23 +10,16 @@ register = template.Library()
 @register.inclusion_tag("main/root_menu.html", takes_context=True)
 def draw_menu(context: dict(), menu_name: MenuItem):
     menu = menu_name
-    logger.debug(f"active_menu: {menu}")
     request_url = context['request'].path.strip("/")
-    logger.debug(f"request_url: {request_url}")
 
-    menu_header = MenuItem.objects.get(title=menu)
+    menu_header = get_object_or_404(MenuItem, title=menu)
     branch = [menu_header]
     active_item = menu_header
-    logger.debug(f"menu_header: {menu_header}")
     try:
-        if request_url != "":
-            active_item = MenuItem.objects.get(slug=request_url)
-            logger.debug(f"active_item: {active_item}")
-            branch.append(active_item)
+        active_item = get_object_or_404(MenuItem, slug=request_url)
+        branch.append(active_item)
     except Exception as e:
         logger.error(f"Exception: {e}")
-
-
 
     def get_active_branch(object: MenuItem) -> list[object]:
         """Builds a list of all the objects parents up to the root"""
@@ -33,10 +28,8 @@ def draw_menu(context: dict(), menu_name: MenuItem):
             branch.append(under_menu_item)
             get_active_branch(under_menu_item)
         return branch
-    
-    
+
     active_branch = get_active_branch(active_item)
-    logger.debug(f"active_branch: {active_branch}")
 
     context = {
         "menu_header": menu_header,

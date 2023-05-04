@@ -1,25 +1,14 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404, render
+from django.urls import Resolver404
 
 from .models import MenuItem
 
 
-# class HomeMenu(ListView):
-#     model = MenuItem
-#     template_name = "main/main_menu.html"
-#     context_object_name = "main_menu"
-
-#     def get_queryset(self):
-#         return MenuItem.objects.filter(nesting_level=1).first()
-
-
-# class MenuItemDetail(DetailView):
-#     model = MenuItem
-#     template_name = "main/main_menu.html"
-#     context_object_name = "main_menu"
-#     queryset = MenuItem.objects.select_related("parrent")
-
-
 def index(request, slug=None):
-    context = {}
-    return render(request, "main/index.html", context)
+    context={}
+    try:
+        context_item = get_object_or_404(MenuItem, slug=slug)
+        context = {"context_item": context_item}
+    except Exception as e:
+        print(e)
+    return render(request, "main/index.html", context=context)
