@@ -1,7 +1,8 @@
 <menu>
     <a href="{{ menu_header.get_absolute_url }}"
-     {% if menu_header == active_item %}
-      class="active" {% endif %}>
+        {% if menu_header == active_item %}
+            class="active"
+        {% endif %}>
         {{ menu_header.title }}
     </a>
     {% if menu_header in active_branch %}

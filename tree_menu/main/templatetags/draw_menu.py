@@ -8,7 +8,12 @@ register = template.Library()
 
 
 @register.inclusion_tag("main/root_menu.html", takes_context=True)
-def draw_menu(context: dict(), menu_name: MenuItem):
+def draw_menu(context: dict(), menu_name: str):
+    """
+    A function for rendering menus.
+    From the context dictionary we get the url requested by the user.
+    Variable menu_name: this is the name of the menu that needs to be rendered.
+    """
     menu = menu_name
     request_url = context['request'].path.strip("/")
 
@@ -22,7 +27,10 @@ def draw_menu(context: dict(), menu_name: MenuItem):
         logger.error(f"Exception: {e}")
 
     def get_active_branch(object: MenuItem) -> list[object]:
-        """Builds a list of all the objects parents up to the root"""
+        """
+        Function for getting the active menu branch.
+        Builds a list of all the objects parents up to the root
+        """
         under_menu_item = object.parrent
         if under_menu_item:
             branch.append(under_menu_item)

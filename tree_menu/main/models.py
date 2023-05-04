@@ -13,9 +13,6 @@ class MenuItem(models.Model):
         related_name="childs",
         verbose_name="Parrent item"
     )
-    nesting_level = models.PositiveIntegerField(
-        default=1, verbose_name="Nesting level"
-    )
 
     def __str__(self) -> str:
         return self.title
