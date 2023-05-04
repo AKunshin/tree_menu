@@ -1,24 +1,19 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {% if context_item %}
+  {% if context_item %}
     {{ context_item.title }}
-    {% else %}
+  {% else %}
     {{ block.super }}
-    {% endif %}
+  {% endif %}
 {% endblock %}
 
 {% load draw_menu %}
 
 {% block content %}
+  {% draw_menu 'Компьютеры' %}
 
-{% draw_menu "Компьютеры" %}
+  {% draw_menu 'Комплектующие для ПК' %}
 
-
-{% draw_menu "Комплектующие для ПК" %}
-
-{% draw_menu "Транспорт" %}
-
-
-
+  {% draw_menu 'Транспорт' %}
 {% endblock %}

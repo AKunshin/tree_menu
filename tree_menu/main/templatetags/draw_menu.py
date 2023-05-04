@@ -14,30 +14,32 @@ def draw_menu(context: dict(), menu_name: str):
     From the context dictionary we get the url requested by the user.
     Variable menu_name: this is the name of the menu that needs to be rendered.
     """
-    menu = menu_name
     request_url = context['request'].path.strip("/")
+    menu_header = get_object_or_404(MenuItem, title=menu_name)
+    active_branch = []
+    active_item = None
 
-    menu_header = get_object_or_404(MenuItem, title=menu)
-    branch = [menu_header]
-    active_item = menu_header
-    try:
-        active_item = get_object_or_404(MenuItem, slug=request_url)
-        branch.append(active_item)
-    except Exception as e:
-        logger.error(f"Exception: {e}")
+    if not request_url == "":
+    #Checking the home page
+        try:
+            active_item = get_object_or_404(MenuItem, slug=request_url)
+            active_branch.append(active_item)
+        except Exception as e:
+            logger.error(f"Exception: {e}")
 
     def get_active_branch(object: MenuItem) -> list[object]:
         """
         Function for getting the active menu branch.
         Builds a list of all the objects parents up to the root
         """
-        under_menu_item = object.parrent
-        if under_menu_item:
-            branch.append(under_menu_item)
-            get_active_branch(under_menu_item)
-        return branch
+        parent_menu_item = object.parrent
+        if parent_menu_item:
+            active_branch.append(parent_menu_item)
+            get_active_branch(parent_menu_item)
+        return active_branch
 
-    active_branch = get_active_branch(active_item)
+    if active_item:
+        active_branch = get_active_branch(active_item)
 
     context = {
         "menu_header": menu_header,
