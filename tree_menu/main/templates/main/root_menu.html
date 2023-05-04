@@ -1,8 +1,10 @@
-{% for item in main_items %}
 <menu>
-    <a href="{{ item.get_absolute_url }}" {% if item == active_item %} class="active" {% endif %}>{{ item.title }}</a>
-    {% if item in active_branch %}
-        {% include 'main/submenu.html' with submenu=item.childs.all %}
+    <a href="{{ menu_header.get_absolute_url }}"
+     {% if menu_header == active_item %}
+      class="active" {% endif %}>
+        {{ menu_header.title }}
+    </a>
+    {% if menu_header in active_branch %}
+        {% include 'main/submenu.html' with submenu=menu_header.childs.all %}
     {% endif %}
 </menu>
-{% endfor %}

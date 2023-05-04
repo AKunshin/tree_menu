@@ -21,7 +21,7 @@ class MenuItem(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('menu_detail', kwargs={"slug": self.slug})
+        return reverse('index', kwargs={"slug": self.slug})
 
     class Meta:
         ordering = ["parrent_id"]

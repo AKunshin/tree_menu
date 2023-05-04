@@ -20,5 +20,6 @@ from .models import MenuItem
 #     queryset = MenuItem.objects.select_related("parrent")
 
 
-def index(request):
-    return render(request, "main/index.html")
+def index(request, slug=None):
+    context = {}
+    return render(request, "main/index.html", context)
